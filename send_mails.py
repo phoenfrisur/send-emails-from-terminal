@@ -25,18 +25,30 @@ from email.mime.base import MIMEBase
 smtp_server = 'localhost'
 port = 25
 
+html = """\
+<html>
+  <body>
+    <p>Hi,<br>
+       How are you?<br>
+       <a href="http://www.realpython.com">Real Python</a> 
+       has many great tutorials.
+    </p>
+  </body>
+</html>
+"""
+
 subject = "Subject"
-body = "This is an email with attachment sent from Python"
+#body = "This is an email with attachment sent from Python"
 sender = 'otte@ub.uni-heidelberg.de'
 receiver = 'otte@ub.uni-heidelberg.de'
-#message = 'Hi There!'
 
-message = MIMEMultipart('alternative')
+message = MIMEMultipart()
 message['Subject'] = 'Test mail'
 message['From'] = 'localhost@pers31.ub.uni-heidelberg.de'
 message['To'] = 'otte@ub.uni-heidelberg.de'
 
-message.attach(MIMEText(body, 'plain'))
+message.attach(MIMEText(html, 'html'))
+#message.attach(MIMEText(body, 'plain'))
 
 filename = 'telefonliste.pdf'
 
@@ -56,7 +68,9 @@ text = message.as_string()
 
 context = ssl._create_unverified_context()
 try:
-   with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+   with smtplib.SMTP(smtp_server, port) as server:
+      server.ehlo()
+      server.starttls(context=context)
       server.sendmail(sender, receiver, text)
 except Exception as e:
    print(e)
