@@ -1,3 +1,5 @@
+# send_emails.py
+
 import email, smtplib, ssl
 from email import encoders
 from email.mime.text import MIMEText
