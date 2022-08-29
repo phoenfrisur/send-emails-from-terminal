@@ -1,6 +1,6 @@
 # Sending Emails with Python from Terminal
 
-This is a simple python script for sending email messages from the terminal. You can configure the subject, the sender's and recipient's email adresses as command line arguments. The email body and potential attachments are added by specifying their relative paths.
+This is a simple python script for sending email messages from the terminal. You can configure the subject, the sender's and recipient's email addresses as command line arguments. The email body and potential attachments are added by specifying their relative paths.
 
 ## Installation
 
