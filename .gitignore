@@ -1,5 +1,2 @@
-*.html
-*.txt
-*.pdf
 venv
 __pycache__
