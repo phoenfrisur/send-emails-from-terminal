@@ -61,13 +61,13 @@ message['Subject'] = subject
 message['From'] = sender
 message['To'] = recipient
 
-# Alternatively, you can use codecs:
+with open(body, 'r', encoding='utf-8') as file:
+   message.attach(MIMEText(file.read(), 'html'))
+
+# Alternatively to 'with open()', you can use codecs:
 # import codecs
 # file = codecs.open(body, "r", "utf-8")
 # message.attach(MIMEText(file.read(), 'html'))
-
-with open(body, 'r', encoding='utf-8') as file:
-   message.attach(MIMEText(file.read(), 'html'))
 
 with open(attachment, 'rb') as file:
    part = MIMEBase('application', 'octet-stream')
