@@ -10,6 +10,13 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser()
 parser.add_argument(
+   "-t",
+   "--title",
+   type=str,
+   default="",
+   help="enter the subject of the email"
+)
+parser.add_argument(
    "-s",
    "--sender",
    type=str,
@@ -19,50 +26,58 @@ parser.add_argument(
 parser.add_argument(
    "-r",
    "--recipient",
-   metavar="Emails",
+   # metavar="Emails",
    type=str,
    default="",
    help="enter one or more website email adresses",
+)
+parser.add_argument(
+   "-b",
+   "--body",
+   type=str,
+   default="",
+   help="enter the relative path to the html file for the email body"
+)
+parser.add_argument(
+   "-a",
+   "--attachment",
+   type=str,
+   default="",
+   help="enter one or more relative paths to files to be attached to the email"
 )
 args = parser.parse_args()
 
 smtp_server = 'localhost'
 port = 25
 
-html = """\
-<html>
-  <body>
-    <p>Hi,<br>
-       How are you?<br>
-       <a href="http://www.realpython.com">Real Python</a> 
-       has many great tutorials.
-    </p>
-  </body>
-</html>
-"""
-
-subject = "Subject"
+subject = args.title
 sender = args.sender
 recipient = args.recipient 
+body = args.body
+attachment = args.attachment
 
 message = MIMEMultipart()
-message['Subject'] = 'Test mail'
-message['From'] = args.sender
-message['To'] = args.recipient  # 'otte@ub.uni-heidelberg.de'
+message['Subject'] = subject
+message['From'] = sender
+message['To'] = recipient
 
-message.attach(MIMEText(html, 'html'))
+# Alternatively, you can use codecs:
+# import codecs
+# file = codecs.open(body, "r", "utf-8")
+# message.attach(MIMEText(file.read(), 'html'))
 
-filename = 'telefonliste.pdf'
+with open(body, 'r', encoding='utf-8') as file:
+   message.attach(MIMEText(file.read(), 'html'))
 
-with open(filename, 'rb') as attachment:
+with open(attachment, 'rb') as file:
    part = MIMEBase('application', 'octet-stream')
-   part.set_payload(attachment.read())
+   part.set_payload(file.read())
 
 encoders.encode_base64(part)
 
 part.add_header(
    'Content-Disposition',
-   f'attachment; filename={filename}'
+   f'attachment; filename={attachment}'
 )
 
 message.attach(part)
