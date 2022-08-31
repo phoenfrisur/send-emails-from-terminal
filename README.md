@@ -5,8 +5,8 @@ This is a simple python script for sending email messages from the terminal. You
 ## Installation
 
 ```bash
-$ git clone git@github.com:pentaquarks/send-emails.git
-$ cd send-emails
+$ git clone git@github.com:pentaquarx/send-emails-from-terminal.git
+$ cd send-emails-from-terminal
 $ pip install -r requirements.txt
 ```
 
