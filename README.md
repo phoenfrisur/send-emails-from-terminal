@@ -7,11 +7,13 @@ This is a simple python script for sending email messages from the terminal. You
 ```bash
 $ git clone git@github.com:pentaquarx/send-emails-from-terminal.git
 $ cd send-emails-from-terminal
+$ python -m venv venv
+$ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
 ## Usage
 
 ```bash
-$ python send_mails.py -t '<subject>' -s '<sender email>' -r '<recipients email>' -b '<path/to/body>' -a '<path/to/attachment>'
+$ python send_mails.py -t 'My subject' -s '<sender’s email>' -r '<recipient’s email>' -b 'body.html' -a '<optional: path/to/attachment>'
 ```
